@@ -3,10 +3,6 @@ const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const { createTokenUser, attachCookiesToResponse } = require("../utils");
 
-const getAllUsers = async (req, res) => {
-  const users = await User.find({ role: "user" }).select("-password");
-  res.status(StatusCodes.OK).json({ users });
-};
 
 const getSingleUser = async (req, res) => {
   const user = await User.findOne({ _id: req.params.id }).select("-password");
@@ -63,7 +59,6 @@ const updateUserPassword = async (req, res) => {
 };
 
 module.exports = {
-  getAllUsers,
   getSingleUser,
   showCurrentUser,
   updateUser,

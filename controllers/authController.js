@@ -6,7 +6,6 @@ const { attachCookiesToResponse, createTokenUser } = require("../utils");
 const register = async (req, res) => {
   const { name, email, password, role } = req.body;
 
-  // check for all the values
   if (!name || !email || !password) {
     throw new CustomError.BadRequestError("Please provide all values.");
   }
@@ -49,7 +48,6 @@ const login = async (req, res) => {
   }
   const tokenUser = createTokenUser(user);
   attachCookiesToResponse({ res, user: tokenUser });
-  console.log(req.user);
   res.status(StatusCodes.OK).json({ user });
 };
 

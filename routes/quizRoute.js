@@ -10,18 +10,17 @@ const {
 
 const {
   authenticateUser,
-  authorizePermissions,
 } = require("../middleware/authentication");
 
 router
   .route("/")
-  .post(authenticateUser, authorizePermissions("admin"), createQuiz);
+  .post(authenticateUser, createQuiz);
 router.route("/:quizId").get(authenticateUser, showQuiz);
 router
   .route("/:quizId")
-  .patch(authenticateUser, authorizePermissions("admin"), updateQuiz);
+  .patch(authenticateUser, updateQuiz);
 router
   .route("/:quizId")
-  .delete(authenticateUser, authorizePermissions("admin"), deleteQuiz);
+  .delete(authenticateUser, deleteQuiz);
 
 module.exports = router;

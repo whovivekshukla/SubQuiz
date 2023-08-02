@@ -5,44 +5,74 @@ const CustomError = require("../errors");
 const createQuiz = async (req, res) => {
   const { title, description, questions } = req.body;
 
-  // Check for required fields
   if (!title || !description || !questions) {
-    throw new CustomError.BadRequestError("Please provide all required data.");
-  }
-
-  try {
-    // Create a new Quiz instance
-    const newQuiz = new Quiz({
-      title,
-      description,
-      questions,
-      createdBy: req.user._id, // Assuming you have middleware that adds the authenticated user to 'req.user'
-    });
-
-    // Save the quiz to the database
-    const savedQuiz = await newQuiz.save();
-
-    res.status(201).json({ quiz: savedQuiz });
-  } catch (error) {
-    // Handle any errors that occur during the save process
-    console.error(error);
-    throw new CustomError.InternalServerError(
-      "An error occurred while saving the quiz."
+    throw new CustomError.BadRequestError(
+      "Please provide title, description and questions."
     );
   }
+
+  const quiz = await Quiz.create({
+    title,
+    description,
+    questions,
+    createdBy: req.user.userId,
+  });
+  res.status(StatusCodes.CREATED).json({ quiz });
 };
 
 const showQuiz = async (req, res) => {
-  console.log(req.role);
-  res.send("Show Quiz");
+  const { quizId } = req.params;
+
+  if (!quizId) {
+    throw new CustomError.BadRequestError("Please provide a valid quizId");
+  }
+
+  const quiz = await Quiz.findOne({ _id: quizId });
+  if (!quiz) {
+    throw new CustomError.NotFoundError(`No Quiz found with id ${quizId}`);
+  }
+  res.status(StatusCodes.OK).json({ quiz });
 };
 
 const updateQuiz = async (req, res) => {
-  res.send("Update Quiz");
+  const { quizId } = req.params;
+  if (!quizId) {
+    throw new CustomError.BadRequestError("Please provide a valid quizId");
+  }
+
+  const { title, description, questions } = req.body;
+  if (!title || !description || !questions) {
+    throw new CustomError.BadRequestError(
+      "Please provide title, description and questions."
+    );
+  }
+
+  const quiz = await Quiz.findOne({ _id: quizId });
+  if (!quiz) {
+    throw new CustomError.NotFoundError(`No Quiz found with id ${quizId}`);
+  }
+
+  quiz.title = title;
+  quiz.description = description;
+  quiz.questions = questions;
+  await quiz.save();
+
+  res.status(StatusCodes.OK).json({ quiz });
 };
 
 const deleteQuiz = async (req, res) => {
-  res.send("Delete Quiz");
+  const { quizId } = req.params;
+  if (!quizId) {
+    throw new CustomError.BadRequestError("Please provide a valid quizId");
+  }
+
+  const quiz = await Quiz.findOne({ _id: quizId });
+  if (!quiz) {
+    throw new CustomError.NotFoundError(`No Quiz found with id ${quizId}`);
+  }
+
+  await Quiz.findOneAndDelete({ _id: quizId });
+  res.status(StatusCodes.OK).json({ msg: "Quiz Deleted" });
 };
 
 module.exports = {

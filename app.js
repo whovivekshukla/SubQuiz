@@ -20,6 +20,7 @@ const connectDB = require("./db/connect");
 const authRouter = require("./routes/authRoute");
 const userRouter = require("./routes/userRoute");
 const quizRouter = require("./routes/quizRoute");
+const participantRouter = require("./routes/participantRoute");
 
 // middleware
 const notFoundMiddleware = require("./middleware/not-found");
@@ -46,14 +47,15 @@ app.get("/", (req, res) => {
   res.send("SubQuiz");
 });
 
-// app.get("/api/v1", (req, res) => {
-//   console.log(req.signedCookies);
-//   res.send("SolveCode");
-// });
+app.get("/api/v1", (req, res) => {
+  console.log(req.signedCookies);
+  res.send("SubQuiz API");
+});
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/quiz", quizRouter);
+app.use("/api/v1/participate", participantRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

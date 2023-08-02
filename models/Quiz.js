@@ -1,5 +1,19 @@
 const mongoose = require("mongoose");
-const questionSchema = require("./Question");
+
+const questionSchema = new mongoose.Schema({
+  question: {
+    type: String,
+    required: true,
+  },
+  options: {
+    type: [String],
+    required: true,
+  },
+  correctOptions: {
+    type: [Number],
+    required: true,
+  },
+});
 
 const quizSchema = new mongoose.Schema({
   title: {
@@ -16,7 +30,7 @@ const quizSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // Assuming you have a User model for the creator
+    ref: "User", 
     required: true,
   },
   createdAt: {
