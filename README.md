@@ -1,4 +1,4 @@
-# SubQuiz - General Knowledge Quiz Application
+# SubQuiz
 
 SubQuiz is a web application that allows users to create and take quizzes on various topics. It provides a platform for quiz creators to design quizzes and share them with participants. Participants can take the quizzes and receive scores based on their answers.
 
