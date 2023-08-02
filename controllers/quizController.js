@@ -52,7 +52,7 @@ const updateQuiz = async (req, res) => {
     );
   }
 
-  const quiz = await Quiz.findOne({ _id: quizId });
+  const quiz = await Quiz.findOne({ _id: quizId, user: req.user.userId });
   if (!quiz) {
     throw new CustomError.NotFoundError(`No Quiz found with id ${quizId}`);
   }

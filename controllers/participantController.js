@@ -138,6 +138,21 @@ const updateParticipation = async (req, res) => {
     throw new CustomError.NotFoundError("Quiz not found.");
   }
 
+  const participation = await Participant.findOne({
+    user: req.user.userId,
+    quiz: quizId,
+  });
+
+  if (!participation) {
+    throw new CustomError.NotFoundError(
+      `You have not participated in this quiz.`
+    );
+  }
+
+  if (!quiz.createdBy == req.user.userId) {
+    throw new CustomError.BadRequestError("You cannot update this quiz.");
+  }
+
   //check if all the answers are provided or not
   if (answers.length !== quiz.questions.length) {
     throw new CustomError.BadRequestError(
@@ -166,11 +181,6 @@ const updateParticipation = async (req, res) => {
       participantScore++;
     }
   }
-
-  const participation = await Participant.findOne({
-    user: req.user.userId,
-    quiz: quizId,
-  });
 
   participation.answers = answers;
   participation.score = participantScore;
