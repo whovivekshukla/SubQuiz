@@ -73,7 +73,13 @@ const participate = async (req, res) => {
 
 const getAllParticipants = async (req, res) => {
   const { quizId } = req.params;
-  const participants = await Participant.findOne({ quiz: quizId });
+  const quiz = await Quiz.findOne({ _id: quizId, createdBy: req.user.userId });
+  if (!quiz) {
+    throw new CustomError.NotFoundError(`No Quiz Found with ID ${quizId}`);
+  }
+  const participants = await Participant.findOne({ quiz: quizId }).select(
+    "-answers"
+  );
   if (!participants) {
     throw new CustomError.NotFoundError(
       "No one has participated yet in this quiz."
