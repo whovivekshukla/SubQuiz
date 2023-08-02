@@ -2,6 +2,11 @@ const Quiz = require("../models/Quiz");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 
+const allQuizzes = async (req, res) => {
+  const quiz = await Quiz.find();
+  res.status(StatusCodes.OK).json({ quiz });
+};
+
 const createQuiz = async (req, res) => {
   const { title, description, questions } = req.body;
 
@@ -76,6 +81,7 @@ const deleteQuiz = async (req, res) => {
 };
 
 module.exports = {
+  allQuizzes,
   createQuiz,
   updateQuiz,
   showQuiz,
