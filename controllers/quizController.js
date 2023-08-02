@@ -1,4 +1,5 @@
 const Quiz = require("../models/Quiz");
+const Participant = require("../models/Participant");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 
@@ -77,6 +78,7 @@ const deleteQuiz = async (req, res) => {
   }
 
   await Quiz.findOneAndDelete({ _id: quizId });
+  await Participant.deleteMany({ quiz: quizId });
   res.status(StatusCodes.OK).json({ msg: "Quiz Deleted" });
 };
 
