@@ -4,7 +4,7 @@ SubQuiz is a web application that allows users to create and take quizzes on var
 
 ## Features
 
-- Quiz Creation: Users can create quizzes with multiple-choice questions, including questions with multiple correct answers.
+- Quiz Creation: Admins can create quizzes with multiple-choice questions, including questions with multiple correct answers.
 - Participant Mode: Participants can take quizzes shared with them using a unique link.
 - Score Tracking: Participants receive scores based on their answers to the quiz questions.
 - Multiple Correct Answers: Quizzes support questions with multiple correct answers.
