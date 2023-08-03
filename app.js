@@ -43,14 +43,14 @@ app.use(cookieParser(process.env.JWT_SECRET));
 
 app.use(express.static("./public"));
 
-app.get("/", (req, res) => {
-  res.send("SubQuiz");
-});
+// app.get("/", (req, res) => {
+//   res.send("SubQuiz");
+// });
 
-app.get("/api/v1", (req, res) => {
-  console.log(req.signedCookies);
-  res.send("SubQuiz API");
-});
+// app.get("/api/v1", (req, res) => {
+//   console.log(req.signedCookies);
+//   res.send("SubQuiz API");
+// });
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
