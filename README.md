@@ -50,4 +50,4 @@ JWT_LIFETIME=1d
 npm start
 ```
 
-5. Open your browser and go to http://localhost:5000/api/v1 to access the SubQuiz application.
+5. Open your browser and go to http://localhost:5000 to access the SubQuiz application. Use Postman to make requests.
